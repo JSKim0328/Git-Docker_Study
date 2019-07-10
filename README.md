@@ -143,7 +143,7 @@ docker serach --filter=stars=100 nginx
 옵션에는 다음과 같은 것들이 있다.
 
 옵션 | 효과
-- | -
+--- | ---
 --no-trunc | 결과를 모두 표시
 --limit | n건의 검색 결과만 표시
 --filter=stars=n | 스타(즐겨찾기)의 수가 n이상인 이미지만 표시
