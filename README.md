@@ -86,28 +86,28 @@ git branch -u <remote>/<branch>
 rebase를 이용하면 여러 갈래의 복잡한 브랜치에서 벗어나 단순한 하나의 브랜치로 버전을 관리할 수 있다. 하지만, 리모트 저장소의 브랜치에 rebase를 하는 것은 상당히 신중해야 한다. 만약 rebase한 브랜치의 커밋 중 하나에서 또 다른 branch를 형성해 작업 중인 동료가 있다면, 골치 아픈 상황에 처할 수 있다.
 
 # Docker 공부내용 요약
-### 1장. 시스템과 인프라 기초지식
-##### 시스템 이용 형태
+## 1장. 시스템과 인프라 기초지식
+#### 시스템 이용 형태
 - 온-프레미스(on-premise): 시스템을 필요로 하는 수요자가 직접 서버나 네트워크 장비 등을 구매하여 시스템을 구축하는 시스템 이용 형태.
     - 주로 높은 가용성, 기밀성, 특수한 기능을 필요로 하는 시스템을 구축할 때 사용됨.
 - 클라우드: 인터넷을 통해 제공되며 필요한 시스템을 필요한 만큼 이용료를 지불하여 사용하는 형태. 초기투자가 필요없다는 것이 특징. ex) SaaS, PaaS, IaaS 등.
     - 트래픽의 변동이 많거나, 백업을 구축하고자 할 때 주로 사용됨.
 
-##### 시스템 기반의 구축/운용 흐름
+#### 시스템 기반의 구축/운용 흐름
 - 폭포형(waterfall): 체계적인 계획 속에서 개발을 진행하고 한 단계가 완전히 끝나면 다음 단계가 시작되는 전형적인 모습의 개발 형태이다. 예를 들어, 빌드가 모두 완료된 다음에 테스트를 진행한다.
 - Agile software development: 어떤 틀과 계획 안에서 차례대로 진행하는 것보다는 피드백 중심으로 유연하게 진행되는 개발 형태이다. 빠른 출시를 통해 서비스 이용자의 피드백을 바탕으로 개발 과정을 빠르게 순환하며 진행된다. 반복되는 과정을 안정적으로 진행하기 위해 자동화를 적극 이용한다.
 
-##### 인프라 구성 관리
+#### 인프라 구성 관리
 - 코드를 사용하여 인프라를 구성하고 관리함으로써 인프라 구성의 변경점을 쉽게 파악하고 환경에 무관하게 자동으로 인프라를 구성할 수 있다.
 
-### 2장. 컨테이너 기술과 Docker의 개요
-##### 컨테이너 기술
+## 2장. 컨테이너 기술과 Docker의 개요
+#### 컨테이너 기술
 - 컨테이너 기술은 한 Application이 작동하기 위해 필요한 리소스를 모아 독립적으로 작동할 수 있도록 하는 기술이다. 컨테이너는 OS 자원을 논리적으로 분리하여 사용하기 때문에, 여러 컨테이너가 독립적으로 작동할 수 있다. 이는 하나의 서버에서 여러 서버를 컨테이너 안에 담아 구동하고 통신할 수 있다는 것을 의미한다.
 
-##### Docker 이미지
+#### Docker 이미지
 - 컨테이너를 구성하는 모든 것을 저장하고 있는 파일이다. 이를 공유함으로써 Docker가 설치되어있는 어떤 환경에서든 컨테이너를 구동할 수 있게 된다.
 
-##### Docker의 기능
+#### Docker의 기능
 - Docker 이미지를 만드는 기능(build)
   프로그램이 작동하기 위해 필요한 리소스를 하나로 모아놓은 파일인 이미지 파일을 만들 수 있느 기능을 제공.
 - Docker 이미지를 공유하는 기능(ship)
@@ -115,14 +115,14 @@ rebase를 이용하면 여러 갈래의 복잡한 브랜치에서 벗어나 단�
 - Docker 컨테이너를 작동시키는 기능(run)
   이미지는 사용자의 환경에 관계없이 docker만 설치되어 있다면 컨테이너로 구동할 수 있다.
 
-##### Docker Component
+#### Docker Component
 - __Docker Engine__: Docker 이미지 생성 컨테이너 구동 등 Docker의 핵심기능.
 - __Docker Registry__: Dokcer 이미지를 공유하기 위한 기능.
 - __Docker Compose__: 컨테이너 구성 정보를 코드로 정의하여 관리하는 기능.
 - __Docker Machine__: Docker 실행 환경을 자동으로 구축하는 기능.
 - __Docker swarm__: 여러 docker 호스트를 클러스터화 하는 기능.
 
-##### Name Space
+#### Name Space
 컨테이너라는 독립된 환경을 만들기 위해 사용되는 기술.
 - PID namespace: 프로세스를 격리.
 - Network namespace: 네트워크 리소스(IP 주소, port 등)을 격리.
@@ -131,9 +131,9 @@ rebase를 이용하면 여러 갈래의 복잡한 브랜치에서 벗어나 단�
 - UTS namespace: 호스트 네임을 격리.
 - IPC namespace: 프로세스 간의 통신 오브젝트를 격리.
 
-### 4장. Docker 명령
-#### Docker 이미지 관리 명령
-##### 이미지 검색
+## 4장. Docker 명령
+### Docker 이미지 관리 명령
+#### 이미지 검색
 원하는 이미지를 찾으려면 [Docker hub](hub.docker.com) 에서 검색하거나, `docker search`명령어를 사용하면 된다.
 ```
 docker search [option] <keyword>
@@ -148,7 +148,7 @@ docker serach --filter=stars=100 nginx
 --limit | n건의 검색 결과만 표시
 --filter=stars=n | 스타(즐겨찾기)의 수가 n이상인 이미지만 표시
 
-##### 이미지 다운로드 및 목록 확인
+#### 이미지 다운로드 및 목록 확인
 찾은 이미지 중 원하는 이미지를 다운받는 명령어는 다음과 같다.
 ```
 docker pull [option] <image>[:tag]
@@ -157,10 +157,10 @@ docker pull ubuntu:latest
 latest 태그는 이미지 중에 가장 최근의 것을 지칭한다.
 만약 다운받은 이미지의 목록을 확인하고 싶으면 `docker images` 혹은 `docker image ls` 등을 사용한다.
 
-##### 이미지 상세 정보 확인
+#### 이미지 상세 정보 확인
 `docker image insepct [option] <image>[:tag]` 를 사용하면 이미지의 상세 정보를 확인할 수 있다. 또, `--filter=` 옵션을 사용하면 원하는 결과를 원하는 형태로 출력할 수 있다. 
 
-##### 이미지 삭제
+#### 이미지 삭제
 불필요한 이미지를 삭제할 수도 있는데, 명령어는 `docker rmi [option] <image>[:tag]` 와 같다. 옵션에는 다음과 같은 것들이 있다.
 
 옵션 | 효과
@@ -168,15 +168,15 @@ latest 태그는 이미지 중에 가장 최근의 것을 지칭한다.
 --all, -a | 사용하지 않은 이미지를 모두 삭제
 --force, -f | 이미지를 예외없이 삭제
 
-##### Docker hub 로그인/로그아웃
+#### Docker hub 로그인/로그아웃
 docker 이미지를 docker hub에 올리기 위해서는 docker hub에 로그인을 해야 한다. 로그인과 로그아웃 명령어는 각각 `docker login`, `docker logout` 이다.
-##### Docker hub에 이미지 업로드
+#### Docker hub에 이미지 업로드
 docker hub에 로그인 한 후, docker 이미지를 공유할 수 있다.
 ```
 docker push <image>[:tag]
 ```
-#### Docker 컨테이너 관련 명령
-##### Docker 이미지로부터 컨테이너 구동 시작
+### Docker 컨테이너 관련 명령
+#### Docker 이미지로부터 컨테이너 구동 시작
 다운받은 docker 이미지를 컨테이너로 만들어서 실행시키고자 할 때, `docker run` 명령을 사용한다.
 ```
 docker run [option] <image>[:tag] [parameter]
@@ -193,17 +193,17 @@ docker run -d -p 800:80 nginx
 --name | 컨테이너의 이름을 지정한다. 생략시 임의의 이름이 설정된다.
 --publish, -p [hostport]:[container_port] | 호스트와 컨테이너의 포트를 맵핑한다.
 
-##### Docker 컨테이너 목록 및 가동 상태 확인
+#### Docker 컨테이너 목록 및 가동 상태 확인
 `docker ps` 혹은 `docker container ls` 명령은 구동 중인 docker 컨테이너의 목록을 보여준다. 만약 모든 컨테이너의 목록을 보고 싶으면 `-a, --all` 명령을 사용하면 된다.
 `docker container stats [container]` 명령을 사용하면 가동 중인 컨테이너의 상태를 `docker contatiner top [container]` 명령을 사용하면 컨테이너 안의 프로세스 실행 상태를 확인할 수 있다.
 
-##### 구동 중인 docker 컨테이너 정지 및 재시작
+#### 구동 중인 docker 컨테이너 정지 및 재시작
 구동 중인 docker를 정지할 때는 `docker container stop <container>` 를 사용하고, 다시 구동시키고 싶으면 `docker container start <container>` 을 사용한다. 이 두 명령어를 연달아 실행시키고자 한다면 `docker container restart <container>` 를 사용하면 된다.
 
-##### 컨테이너 삭제
+#### 컨테이너 삭제
 더 이상 컨테이너를 사용하지 않는 경우, `docker rm <container>` 명령으로 삭제한다.
 
-#### Docker 네트워크
+### Docker 네트워크
 외부와 컨테이너, 컨테이너와 컨테이너끼리 통신하고자 할 때, docker 네트워크를 사용한다. 기본적으로 bridge, host, none 세 가지의 네트워크가 생성되어 있는데, `docker run -d -p 800:80 nginx` 명령을 사용하고 `docker inspect` 명령으로 해당 컨테이너를 조사해보면 nginx 웹서버가 bridge 네트워크에 연결되있는 것을 확인할 수 있다. 관련된 명령어로는 다음과 같은 것들이 있다.
 
 명령 | 효과
@@ -215,20 +215,87 @@ docker run -d -p 800:80 nginx
 `docker network inspect` | 네트워크 상세 정보 확인.
 `docker network rm` | 네트워크 삭제.
 
-#### 가동 중인 컨테이너 조작
-##### 가동 컨테이너에 접속
+### 가동 중인 컨테이너 조작
+#### 가동 컨테이너에 접속
 예를 들어, `docker run -it --name mylinux ubuntu /bin/bash` 명령을 사용하면 우분투 컨테이너에서 bash 쉘을 실행시키는데 `exit` 명령을 치면 컨테이너까지 같이 정지된다. 그 이유는 `docker run` 의 인자로 `/bin/bash` 를 전달하여 프로세스를 실행시켰기 때문인데, 만약 프로세스만 정지하고 컨테이너의 구동을 유지한 상태로 컨테이너에서 빠져나오고 싶다면 `ctrl+P, ctrl+Q`를 누르면 된다. 그리고 다시 컨테이너에 접속하고 싶으면 `docker container attach` 명령을 사용한다.
 
-##### 가동 컨테이너에서 프로세스 실행
+#### 가동 컨테이너에서 프로세스 실행
 위의 예시에서 컨테이너에서 빠져나온 상태로 접속하지 않고 어떤 명령만 실행시키고 싶다면 다음과 같이 하면 된다.
 ```
 docker container exec <container> <command>
 ```
-##### 컨테이너 내부 파일 복사
+#### 컨테이너 내부 파일 복사
 컨테이너 내부와 호스트 OS 파일 시스템에 사이에서 파일을 복사하고 싶으면 다음과 같이 한다.
 ```
 docker cp <continer>:<path> <path> // 컨테이너 내부 파일 -> 호스트
 docker cp <path> <container>:<path> // 호스트 내부 파일 -> 컨테이너
 ```
-##### 컨테이너 변경점 확인
+#### 컨테이너 변경점 확인
 컨테이너를 이미지로 부터 구동하고 여러 조작을 하면서 달라진 점을 확인하고 싶으면 `docker diff <container>` 명령을 사용한다.
+
+## 5장. Dockerfile
+Dockerfile은 `COMMAND <parameter>` 의 기본 형식을 갖고 있고 `#` 을 통해 주석을 달 수도 있다. `command` 는 대문자로 쓰는 것이 관례이다(소문자로 써도 무관). 
+#### FROM
+Dockerfile은 항상 기존의 이미지를 베이스로 새로운 이미지를 생성한다. `FROM` 명령이 바로 그 베이스가 되는 이미지를 지정하는 명령이고, dockerfile에 항상 존재해야 한다. `FROM` 명령은 다음과 같은 형식으로 기술한다.
+```
+FROM [image]<:tag>
+FROM [image]<@digest>
+FROM ubuntu:latest
+```
+이미지의 digest는 `docker images --digests [image]` 를 통해 확인할 수 있다.
+#### Dockerfile 빌드하기
+Dockerfile에 작성한 내용을 토대로 이미지를 만드려면 `docker build` 명령을 사용하면 된다. 용례는 다음과 같다. directory는 Dockerfile이 위치한 디렉토리를 말한다.
+```
+docker build -t <image>:<tag> <directory>
+docker build -t <image>:<tag> -f <my_own_dockerfile> <directory>
+docker build - < Dockerfile
+```
+`-f` 옵션을 통해 파일 이름을 별도로 설정할 수도 있는데, 이 경우에 docker hub의 이미지 자동 생성 기능을 사용할 수 없다. 또, pipeline을 통해 Dockerfile의 내용만 전달할 경우, 다른 파일을 전달할 수 없게 된다. 그럴 경우에는 tar을 통해 아카이브를 형성하여 전달한다.
+```
+docker build - < docker.tar.gz
+```
+
+#### Docker 이미지의 레이어 구조
+Dockerfile의 각 명령어는 모두 이미지 파일로 생성된다. 이런 이미지 파일들을 `intermediate image` 라고 하는데, 레이어 구조를 가진다. 그렇게 함으로써 공통되는 이미지 레이어는 여러 이미지가 공유할 수 있어서 디스크 용량을 효율적으로 이용할 수 있다.
+
+#### 멀티스테이지 빌드
+개발환경과 제품환경에서 필요한 리소스가 다른 경우가 존재하는데, 이런 경우 두 이미지가 같은 리소스를 갖는 것은 비효울적이다. 따라서, 각각의 이미지가 필요한 리소스만을 확보하도록 Dockerfile을 작성하면 더 효율적으로 이미지를 운용할 수 있다.
+
+#### RUN, CMD, ENTRYPOINT
+이 명령들은 모두 Exec, Shell 두 가지 형태로 기술될 수 있다.
+- Exec 형식
+  `<COMMAND> ["parameter1","parameter2", ...]`
+  이 형식은 실행하고자 하는 명령을 JSON 배열로 지정하는데, 쉘을 경유하지 않아서 환경변수를 사용할 수 없다.
+- Shell 형식
+  `<COMMAND> <shell_command>`
+  이 형식은 쉘 커맨드 형태로 명령을 입력해서 쉘을 통해 실행된다.
+
+#### RUN
+이 명령은 최종 이미지를 위한 환경 구축을 위해 주로 사용된다. 예를 들어, 웹서버 nginx를 요구하는 환경이라면 웹서버를 미리 설치해놓는 것이 좋을 것이다. 이를 위해 Dockerfile에 다음과 같은 명령을 넣는다.
+```
+RUN apt-get install -y nginx
+혹은
+RUN ["/bin/bash", "-c", "apt-get install -y nginx"]
+```
+#### CMD
+CMD 명령은 컨테이너를 구동할 때, 전달하는 디폴트 인자를 설정하는 명령이다. 예를 들어, Dockerfile에 다음과 같이 적고 빌드하여 `docker run -it --rm myubuntu` 를 실행하면 `docker run -it --rm ubuntu:latest /bin/bash` 를 실행한 것과 같다.
+```
+FROM ubuntu:latest
+CMD ["/bin/bash"]
+```
+이 명령이 설정하는 것은 디폴트 인자이므로 여러 번 적어도 가장 마지막 명령만 적용된다. 또 컨테이너를 구동할 때, 다른 인자를 전달하면 `CMD` 명령은 무시된다.
+
+#### ENTRYPOINT
+이 명령도 `CMD` 처럼 컨테이너를 구동할 때, 인자를 설정하는 명령이다. 다만, `CMD` 와 다른 점은 이 명령은 항상 실행된다는 것이다. 즉, 컨테이너 구동 시에 다른 인자를 전달해도 `ENTRYPOINT` 로 설정한 인자가 먼저 위치하고 그 다음에 다른 인자들이 위치한다. 이 때, 이 명령으로 설정한 인자 다음에 올 인자를 `CMD` 명령으로 설정할 수도 있다. 다음의 예시를 보자.
+```
+FROM ubuntu:latest
+ENTRYPOINT ["top"]
+CMD ["-d", "10"]
+```
+이렇게 하면, 컨테이너를 구동했을 때, top의 결과를 10초마다 갱신하게 할 수 있다. 그런데 만약 컨테이너 구동시에 `-d 2` 라는 인자를 전달하면 `CMD` 명령으로 전달한 인자는 무시되고 top의 결과가 2초마다 갱신되게 된다. 이 때, 주의할 점은 `ENTRYPOINT` 명령을 쉘 형식으로 작성하면 추가 인자는 무시한다.
+
+#### ONBUILD
+`ONBUILD` 명령은 이 명령이 적혀있는 Dockerfile로 생성된 이미지를 기반으로 작성되는 또 다른 이미지를 빌드할 때 실행되는 명령을 지정할 수 있다.
+
+
+
