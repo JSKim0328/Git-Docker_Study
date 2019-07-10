@@ -126,3 +126,94 @@ rebase를 이용하면 여러 갈래의 복잡한 브랜치에서 벗어나 단�
 - IPC namespace: 프로세스 간의 통신 오브젝트를 격리.
 
 ### 4장. Docker 명령
+#### Docker 이미지 관리 명령
+##### 이미지 검색
+원하는 이미지를 찾으려면 [Docker hub](hub.docker.com) 에서 검색하거나, `docker search`명령어를 사용하면 된다.
+```
+docker search [option] <keyword>
+docker search nginx
+docker serach --filter=stars=100 nginx
+```
+옵션에는 다음과 같은 것들이 있다.
+옵션 | 효과
+- | -
+--no-trunc | 결과를 모두 표시
+--limit | n건의 검색 결과만 표시
+--filter=stars=n | 스타(즐겨찾기)의 수가 n이상인 이미지만 표시
+
+##### 이미지 다운로드 및 목록 확인
+찾은 이미지 중 원하는 이미지를 다운받는 명령어는 다음과 같다.
+```
+docker pull [option] <image>[:tag]
+docker pull ubuntu:latest
+```
+latest 태그는 이미지 중에 가장 최근의 것을 지칭한다.
+만약 다운받은 이미지의 목록을 확인하고 싶으면 `docker images` 혹은 `docker image ls` 등을 사용한다.
+##### 이미지 상세 정보 확인
+`docker image insepct [option] <image>[:tag]` 를 사용하면 이미지의 상세 정보를 확인할 수 있다. 또, `--filter=` 옵션을 사용하면 원하는 결과를 원하는 형태로 출력할 수 있다. 
+##### 이미지 삭제
+불필요한 이미지를 삭제할 수도 있는데, 명령어는 `docker rmi [option] <image>[:tag]` 와 같다. 옵션에는 다음과 같은 것들이 있다.
+옵션 | 효과
+- | -
+--all, -a | 사용하지 않은 이미지를 모두 삭제
+--force, -f | 이미지를 예외없이 삭제
+
+##### Docker hub 로그인/로그아웃
+docker 이미지를 docker hub에 올리기 위해서는 docker hub에 로그인을 해야 한다. 로그인과 로그아웃 명령어는 각각 `docker login`, `docker logout` 이다.
+##### Docker hub에 이미지 업로드
+docker hub에 로그인 한 후, docker 이미지를 공유할 수 있다.
+```
+docker push <image>[:tag]
+```
+#### Docker 컨테이너 관련 명령
+##### Docker 이미지로부터 컨테이너 구동 시작
+다운받은 docker 이미지를 컨테이너로 만들어서 실행시키고자 할 때, `docker run` 명령을 사용한다.
+```
+docker run [option] <image>[:tag] [parameter]
+docker run -it --name mylinux ubuntu /bin/bash
+docker run -d -p 800:80 nginx
+```
+주요 옵션은 다음과 같다.
+옵션 | 효과
+- | -
+--detach, -d | 컨테이너를 백그라운드에서 실행한다.
+--interactive, -i | 컨테이너의 표준입력을 연다.
+--tty, -t | 컨테이너와 쉘의 입출력을 파이프라인한다.
+--name | 컨테이너의 이름을 지정한다. 생략시 임의의 이름이 설정된다.
+--publish, -p [hostport]:[container_port] | 호스트와 컨테이너의 포트를 맵핑한다.
+
+##### Docker 컨테이너 목록 및 가동 상태 확인
+`docker ps` 혹은 `docker container ls` 명령은 구동 중인 docker 컨테이너의 목록을 보여준다. 만약 모든 컨테이너의 목록을 보고 싶으면 `-a, --all` 명령을 사용하면 된다.
+`docker container stats [container]` 명령을 사용하면 가동 중인 컨테이너의 상태를 `docker contatiner top [container]` 명령을 사용하면 컨테이너 안의 프로세스 실행 상태를 확인할 수 있다.
+##### 구동 중인 docker 컨테이너 정지 및 재시작
+구동 중인 docker를 정지할 때는 `docker container stop <container>` 를 사용하고, 다시 구동시키고 싶으면 `docker container start <container>` 을 사용한다. 이 두 명령어를 연달아 실행시키고자 한다면 `docker container restart <container>` 를 사용하면 된다.
+##### 컨테이너 삭제
+더 이상 컨테이너를 사용하지 않는 경우, `docker rm <container>` 명령으로 삭제한다.
+#### Docker 네트워크
+외부와 컨테이너, 컨테이너와 컨테이너끼리 통신하고자 할 때, docker 네트워크를 사용한다. 기본적으로 bridge, host, none 세 가지의 네트워크가 생성되어 있는데, `docker run -d -p 800:80 nginx` 명령을 사용하고 `docker inspect` 명령으로 해당 컨테이너를 조사해보면 nginx 웹서버가 bridge 네트워크에 연결되있는 것을 확인할 수 있다. 관련된 명령어로는 다음과 같은 것들이 있다.
+명령 | 효과
+- | -
+`docker network ls` | 네트워크 목록 표시.
+`docker network create` | 네트워크 생성.
+`docker network connect` | 네트워크 연결
+`docker network disconnect` | 네트워크 연결 끊기.
+`docker network inspect` | 네트워크 상세 정보 확인.
+`docker network rm` | 네트워크 삭제.
+
+#### 가동 중인 컨테이너 조작
+##### 가동 컨테이너에 접속
+예를 들어, `docker run -it --name mylinux ubuntu /bin/bash` 명령을 사용하면 우분투 컨테이너에서 bash 쉘을 실행시키는데 `exit` 명령을 치면 컨테이너까지 같이 정지된다. 그 이유는 `docker run` 의 인자로 `/bin/bash` 를 전달하여 프로세스를 실행시켰기 때문인데, 만약 프로세스만 정지하고 컨테이너의 구동을 유지한 상태로 컨테이너에서 빠져나오고 싶다면 `ctrl+P, ctrl+Q`를 누르면 된다. 그리고 다시 컨테이너에 접속하고 싶으면 `docker container attach` 명령을 사용한다.
+
+##### 가동 컨테이너에서 프로세스 실행
+위의 예시에서 컨테이너에서 빠져나온 상태로 접속하지 않고 어떤 명령만 실행시키고 싶다면 다음과 같이 하면 된다.
+```
+docker container exec <container> <command>
+```
+##### 컨테이너 내부 파일 복사
+컨테이너 내부와 호스트 OS 파일 시스템에 사이에서 파일을 복사하고 싶으면 다음과 같이 한다.
+```
+docker cp <continer>:<path> <path> // 컨테이너 내부 파일 -> 호스트
+docker cp <path> <container>:<path> // 호스트 내부 파일 -> 컨테이너
+```
+##### 컨테이너 변경점 확인
+컨테이너를 이미지로 부터 구동하고 여러 조작을 하면서 달라진 점을 확인하고 싶으면 `docker diff <container>` 명령을 사용한다.
