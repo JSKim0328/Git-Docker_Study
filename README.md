@@ -164,7 +164,7 @@ latest 태그는 이미지 중에 가장 최근의 것을 지칭한다.
 불필요한 이미지를 삭제할 수도 있는데, 명령어는 `docker rmi [option] <image>[:tag]` 와 같다. 옵션에는 다음과 같은 것들이 있다.
 
 옵션 | 효과
-- | -
+--- | ---
 --all, -a | 사용하지 않은 이미지를 모두 삭제
 --force, -f | 이미지를 예외없이 삭제
 
@@ -186,7 +186,7 @@ docker run -d -p 800:80 nginx
 주요 옵션은 다음과 같다.
 
 옵션 | 효과
-- | -
+--- | ---
 --detach, -d | 컨테이너를 백그라운드에서 실행한다.
 --interactive, -i | 컨테이너의 표준입력을 연다.
 --tty, -t | 컨테이너와 쉘의 입출력을 파이프라인한다.
@@ -207,7 +207,7 @@ docker run -d -p 800:80 nginx
 외부와 컨테이너, 컨테이너와 컨테이너끼리 통신하고자 할 때, docker 네트워크를 사용한다. 기본적으로 bridge, host, none 세 가지의 네트워크가 생성되어 있는데, `docker run -d -p 800:80 nginx` 명령을 사용하고 `docker inspect` 명령으로 해당 컨테이너를 조사해보면 nginx 웹서버가 bridge 네트워크에 연결되있는 것을 확인할 수 있다. 관련된 명령어로는 다음과 같은 것들이 있다.
 
 명령 | 효과
-- | -
+--- | ---
 `docker network ls` | 네트워크 목록 표시.
 `docker network create` | 네트워크 생성.
 `docker network connect` | 네트워크 연결
