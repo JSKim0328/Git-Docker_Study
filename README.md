@@ -18,6 +18,7 @@ Git 저장소를 처음 만드는 방법은 크게 두가지가 있다. 프로�
 첫 번째 방법은 해당 디렉토리로 들어가서 `git init` 명령을 실행하는 것이다. 그럼 자동으로 해당 디렉토리는 Git 저장소가 된다(즉, `.git` 디렉토리가 형성된다). 이후 commit을 하면 본격적으로 Git을 통한 관리를 시작하게 된다.  
 
 두 번째 방법은 `git clone <url>`을 사용하는 것이다. 예를 들어, `git clone https://github.com/libgit2/libgit2` 명령을 사용하면 현재 디렉토리에 libgit2라는 디렉토리를 만들고 그 디렉토리를 Git 저장소로 만든다. 물론 이 저장소는 <url>의 저장소의 정보를 모두 담고 있다. 만약 특정 디렉토리를 저장소로 만들고 싶으면 `git clone <url> <path>` 명령을 사용하면 된다.
+
 #### Git Status
 Git 저장소 안에 있는 파일은 크게 tracked와 untracked 상태로 나뉜다. tracked 파일은 Git에 의해 관리 되는 파일이고 untracked는 그 반대이다. 만약 `git init`을 통해 막 저장소를 만들었다면, 모든 파일은 untracked 상태일 것이다. 이는 `git status` 명령으로 확인할 수 있다. untracked 파일을 tracked 파일로 만들고 싶으면 `git add <file>` 명령을 사용하면 된다. 만약 로그나 임시 파일들과 같은 파일을 Git이 관리하게 하고 싶지 않으면 `.gitignore` 이라는 파일에 그 파일들을 적으면 된다. 해당 파일들은 `git status` 명령을 사용해도 untracked라 표시되지 않는다.
 
@@ -58,13 +59,18 @@ Git은 staged 된 모든 파일을 Git 저장소에 blob이라는 형태로 저�
 #### 브랜치란
 커밋 객체들은 자기 이전의 커밋 객체를 가리키는 포인터를 갖는다. 즉, 임의의 커밋 객체를 선택하면 그 객체 이전의 모든 커밋이 줄줄이 딸려나오는 것이다. 이 때, 그 임의의 객체를 가리키는 포인터가 곧 브랜치이다. 
 #### 새로운 브랜치 만들기
-따로 브랜치를 만들지 않아도 기본적으로 master 브랜치가 존재하는데, 새로운 브랜치를 만들고 싶다면 `git branch <branch> <checksum>` 명령을 사용하면 된다(checksum의 일부만 입력해도 된다). checksum을 생략하면 헤드 브랜치와 같은 커밋을 가리키는 브랜치가 생성된다. 헤드 브랜치를 바꾸는 명령어는 `git checkout <branch>`이다. 커밋을 하면 헤드 브랜치는 자동으로 다음 커밋을 가리키고, 다른 브랜치는 움직이지 않는다.
+따로 브랜치를 만들지 않아도 기본적으로 master 브랜치가 존재하는데, 새로운 브랜치를 만들고 싶다면 `git branch <branch> <checksum>` 명령을 사용하면 된다(checksum의 일부만 입력해도 된다).
+
+checksum을 생략하면 헤드 브랜치와 같은 커밋을 가리키는 브랜치가 생성된다. 헤드 브랜치를 바꾸는 명령어는 `git checkout <branch>`이다. 커밋을 하면 헤드 브랜치는 자동으로 다음 커밋을 가리키고, 다른 브랜치는 움직이지 않는다.
 #### 브랜치 분할
 앞에서 말했듯이, 커밋을 하면 현재 브랜치만 움직인다. 만약 master 브랜치와 같은 위치에 testing 브랜치를 만들고 master 브랜치에 헤드가 있는 상태에서 커밋을 한다고 하자. 그러면 master 브랜치는 새로운 커밋을 가리키고 testing 브랜치는 이전 커밋을 가리킬 것이다. 이 상태에서 `git checkout testing;~수정~;git commit -m '분할!'` 와 같은 명령들을 실행시키면, master 브랜치와 testing 브랜치는 한 커밋에서 나뉘어 질 것이다.
 #### 브랜치 Merge
 앞의 예시와 같이 분할된 브랜치를 다시 합치는 명령어 역시 존재한다. 예를 들어, master 브랜치에 헤드가 있는 상태에서 `git merge <other branch>(testing)` 명령을 실행하면, 두 브랜치의 파일들이 합쳐져 stage 된다. 그런 다음, 커밋을 하면 master 브랜치가 합쳐진 내용의 커밋을 가리키고 testing 브랜치는 움직이지 않는다.
+
 그런데 merge 하려는 브랜치들에 서로 같은 이름의 다른 내용을 가진 파일이 존재할 수 있다. 이럴 경우, conflict가 발생하는데, conflict가 발생한 파일은 사용자가 수정하여 명시적으로 add 해줘야 한다.
+
 merge한 후에 testing 브랜치가 더 이상 필요하지 않으면 `git branch -d testing` 명령을 통해 브랜치를 삭제할 수 있다.
+
 #### 리모트 브랜치
 리모트 브랜치란 리모트 저장소에 존재하는 브랜치를 말한다. 리모트 브랜치는 로컬에서는 `<remote>/<branch>`로 표기된다. 기본적으로 리모트 브랜치는 움직일 수 없는데, 만약 리모트 브랜치에 대해 작업을 하고 싶으면 로컬 브랜치로 리모트 브랜치를 track 해야 한다. 이를 위해 다양한 명령어가 존재하는데 다음과 같다.
 ```
@@ -135,6 +141,7 @@ docker search nginx
 docker serach --filter=stars=100 nginx
 ```
 옵션에는 다음과 같은 것들이 있다.
+
 옵션 | 효과
 - | -
 --no-trunc | 결과를 모두 표시
@@ -149,10 +156,13 @@ docker pull ubuntu:latest
 ```
 latest 태그는 이미지 중에 가장 최근의 것을 지칭한다.
 만약 다운받은 이미지의 목록을 확인하고 싶으면 `docker images` 혹은 `docker image ls` 등을 사용한다.
+
 ##### 이미지 상세 정보 확인
 `docker image insepct [option] <image>[:tag]` 를 사용하면 이미지의 상세 정보를 확인할 수 있다. 또, `--filter=` 옵션을 사용하면 원하는 결과를 원하는 형태로 출력할 수 있다. 
+
 ##### 이미지 삭제
 불필요한 이미지를 삭제할 수도 있는데, 명령어는 `docker rmi [option] <image>[:tag]` 와 같다. 옵션에는 다음과 같은 것들이 있다.
+
 옵션 | 효과
 - | -
 --all, -a | 사용하지 않은 이미지를 모두 삭제
@@ -174,6 +184,7 @@ docker run -it --name mylinux ubuntu /bin/bash
 docker run -d -p 800:80 nginx
 ```
 주요 옵션은 다음과 같다.
+
 옵션 | 효과
 - | -
 --detach, -d | 컨테이너를 백그라운드에서 실행한다.
@@ -185,12 +196,16 @@ docker run -d -p 800:80 nginx
 ##### Docker 컨테이너 목록 및 가동 상태 확인
 `docker ps` 혹은 `docker container ls` 명령은 구동 중인 docker 컨테이너의 목록을 보여준다. 만약 모든 컨테이너의 목록을 보고 싶으면 `-a, --all` 명령을 사용하면 된다.
 `docker container stats [container]` 명령을 사용하면 가동 중인 컨테이너의 상태를 `docker contatiner top [container]` 명령을 사용하면 컨테이너 안의 프로세스 실행 상태를 확인할 수 있다.
+
 ##### 구동 중인 docker 컨테이너 정지 및 재시작
 구동 중인 docker를 정지할 때는 `docker container stop <container>` 를 사용하고, 다시 구동시키고 싶으면 `docker container start <container>` 을 사용한다. 이 두 명령어를 연달아 실행시키고자 한다면 `docker container restart <container>` 를 사용하면 된다.
+
 ##### 컨테이너 삭제
 더 이상 컨테이너를 사용하지 않는 경우, `docker rm <container>` 명령으로 삭제한다.
+
 #### Docker 네트워크
 외부와 컨테이너, 컨테이너와 컨테이너끼리 통신하고자 할 때, docker 네트워크를 사용한다. 기본적으로 bridge, host, none 세 가지의 네트워크가 생성되어 있는데, `docker run -d -p 800:80 nginx` 명령을 사용하고 `docker inspect` 명령으로 해당 컨테이너를 조사해보면 nginx 웹서버가 bridge 네트워크에 연결되있는 것을 확인할 수 있다. 관련된 명령어로는 다음과 같은 것들이 있다.
+
 명령 | 효과
 - | -
 `docker network ls` | 네트워크 목록 표시.
