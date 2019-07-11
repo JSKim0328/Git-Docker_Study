@@ -337,3 +337,31 @@ ADD/COPY ["host_path", "image_path"]
 두 명령은 기본적으로 호스트에 있는 파일을 이미지에 추가하는 기능을 한다. 다만 `ADD` 명령은 호스트 가 아닌 웹 등의 외부에 존재하는 파일도 전달할 수 있고, 아카이브 파일의 자동 압축 해제 등의 기능을 지원하는 반면, `COPY` 명령은 단순히 호스트에 존재하는 파일을 그대로 복사한다.
 
 ## 6장. Docker 이미지 공개
+#### Github을 통한 이미지 자동 생성과 공개
+Docker hub 은 github 과의 연동을 지원하는데, 계정 연동을 하면 github 에 공개한 Dockerfile(파일 이름이 Dockerfile 이어야함)을 자동으로 Docker hub 에 이미지로 빌드하여 올려준다.
+
+#### Docker registry를 이용한 private registry 구축
+##### Docker regsitry 다운 및 컨테이너 구동
+Docker hub 에서 다운받을 수 있는 `registry` 를 컨테이너로 구동하면 로컬 레지스트리를 구성할 수 있다. 레지스트리는 5000번 포트를 `EXPOSE` 하고 있기 때문에, 컨테이너를 구동할 때, `docker run -dp <hostport>:5000 registry` 명령을 사용한다.
+
+##### Docker 이미지 업로드
+Docker 이미지의 업로드를 하려면 특정한 규칙에 따라 이미지에 태그를 붙여야 한다. 그 규칙은 다음과 같다.
+```
+docker image tag <local_image> <address>:<hostport>/<image name>
+docker image tag my_ubuntu localhost:5000/my_registry_ubuntu
+```
+그런 다음, 다음과 같이 `docker push` 명령을 사용하면 컨테이너로 구동 중인 로컬 레지스트리에 이미지가 업로드 된다.
+```
+docker push localhost:5000/my_registry_ubuntu
+```
+##### Docker 이미지 다운로드
+다운로드도 마찬가지로 `docker pull` 명령을 사용하면 되는데, 만약 레지스트리에 어떤 이미지가 있는지 보고 싶다면, 다음과 같은 명령을 사용한다.
+```
+curl http://localhost:<hostport>/v2/_catalog
+```
+이 명령을 사용하면 업로드한 이미지의 목록을 보여준다.
+
+#### 클라우드를 이용한 프라이빗 레지스트리 구축
+구글의 [Google Container Registry](https://console.cloud.google.com/apis/library/containerregistry.googleapis.com?q=googel%20container&id=345e3473-111d-4883-bae6-76295c034ed8&project=daring-cache-246402&pli=1) 를 사용하면 로컬이 아닌 클라우드에서 이미지를 관리할 수 있다.
+
+# 7장. 여러 컨테이너의 운용 관리
