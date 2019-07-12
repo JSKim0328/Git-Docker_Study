@@ -459,6 +459,7 @@ env_file:
 ```
 ### docker-compose 명령
 'docker-compose` 명령에는 다음과 같은 서브 명령들이 있다.
+
 서브 명령 | 설명
 --- | ---
 up | 컨테이너 생성 후 시작
