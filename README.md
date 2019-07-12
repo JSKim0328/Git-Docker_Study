@@ -365,3 +365,112 @@ curl http://localhost:<hostport>/v2/_catalog
 구글의 [Google Container Registry](https://console.cloud.google.com/apis/library/containerregistry.googleapis.com?q=googel%20container&id=345e3473-111d-4883-bae6-76295c034ed8&project=daring-cache-246402&pli=1) 를 사용하면 로컬이 아닌 클라우드에서 이미지를 관리할 수 있다.
 
 # 7장. 여러 컨테이너의 운용 관리
+## 웹 3계층 아키텍처
+- 프론트 서버
+  클라이언트와의 통신을 담당하는 서버로, 클라이언트의 요청을 받아 응답을 반환하는 역할을 한다.
+- 에플리케이션 서버 
+  프론트 서버가 받은 요청의 실질적인 처리를 담당하는 서버이다.
+- 데이터베이스 서버
+  서비스를 제공하기 위한 영구 데이터를 보관하는 서버이다. 중요한 정보들이 보관되어 있기 때문에 백업, 원격 보관 등 여러 대책을 마련하여 운용한다.
+
+## Docker-compose 파일
+Docker compose 파일은 YAML 형식으로 기술되는데, 서로 연관되어 있는 여러 컨테이너를 일괄적으로 관리하기 위해 사용한다. 이 파일에는 각 컨테이너의 구성 정보가 적혀있어, 명령어 하나로 여러 컨테이너를 한번에 관리하는 것이 가능하다.
+### version & service
+docker-compose.yml(Docker compose 파일) 은 docker engine 의 버전에 따라 호환되는 버전이 다른데, 사용할 docker engine 버전을 확인하고 이에 맞는 docker-compose 파일 버전을 다음과 같이 명시해 줘야 한다.
+```
+version: '3'
+```
+자신의 docker engine의 버전은 `docker --version` 을 통해 확인할 수 있고, 해당하는 docker-compose 파일은 [여기](https://docs.docker.com/compose/compose-file/compose-versioning/)에서 확인할 수 있다. 그 다음에는 어떤 컨테이너들을 관리할 지에 대해 적어야 하는데, 이는 services 파트에 다음과 같이 적는다.
+```
+version: '3'
+ services:
+  <container_1>:
+   ...중략...
+  <container_2>:
+  ...중략...
+```
+### image
+컨테이너 파트에 어떤 이미지를 베이스로 할 것인지 알려줘야 한다.
+```
+...중략...
+  <container_1>:
+   image: <image>
+```
+이 이미지를 Dockerfile 로 정의할 수도 있다.
+```
+...중략...
+  <container_1>:
+   build: . # 현재 디렉토리의 Dockerfile 파일을 사용
+```
+직접 다른 이름의 파일을 지정할 수도 있는데 그 파일이 위치한 곳을 `context`에, 파일 이름을 `dockerfile`에 적는다. 
+```
+...중략...
+  <container_1>:
+   build:
+    context: /data
+    dockerfile: another_dockerfile
+```
+### command, entrypoint
+Dockerfile 에서의 `CMD`, `ENTRYPOINT` 와 같은 역할의 명령어가 docker-compose 파일에도 존재한다. 이 때, docker-compose 파일에 적힌 명령이 Dockerfile 의 명령보다 우선한다.
+### links
+기본적으로 docker 컨테이너는 격리되어 있으므로 서로 접근할 수 없다. 하지만 `links` 를 사용하면 컨테이너끼리 접근가능하게 할 수 있다.
+```
+links:
+ - logserver
+ - logserver:log01
+```
+이 때, `<service>:<alias>` 형태로 별칭을 지정할 수도 있다.
+### expose, ports
+컨테이너의 포트를 공개하고 싶을 때는 `ports`, 링크된 컨테이너에게만 공개하고 싶을 때는 `expose`를 사용한다.
+```
+ports:
+ - "3000"   # 컨테이너의 3000번 포트를 공개. 호스트의 포트는 랜덤 지정.
+ - "3000:8000"  # 컨테이너의 8000번 포트를 호스트의 3000번 포트에 공개
+```
+### depends_on
+여러 서비스간의 의존관계를 정의할 수 있다. 만약 서비스 A가 서비스 B에 의존하면, 서비스 A는 서비스 B가 시작된 뒤에 시작될 수 있다. 물론 `depens_on` 은 시작 순서만 제어할 뿐 컨테이너 내부의 세세한 것까지 관여하지는 않기 때문에 주의해야 한다.
+```
+services:
+ webserver:
+  build: .
+  depends_on:
+   - db
+   - redis
+  redi의s:
+   image: redis
+  db:
+   image: postgres
+```
+### environment/env_file
+컨테이너 안의 환경 변수를 지정할 수도 있다. `environment` 로 하나하나 지정할 수도 있고, `env_file` 로 환경 변수 설정 파일을 불러올 수도 있다. 용례는 다음과 같다.
+```
+# 배열 형식
+environment:
+ - HOGE=fuga
+ - FOO
+# 해시 형식
+environment:
+ - HOGE: fuga
+ - FOO:
+# 파일로
+env_file:
+ - ./envfile
+ - ./app/envfile2
+```
+### docker-compose 명령
+'docker-compose` 명령에는 다음과 같은 서브 명령들이 있다.
+서브 명령 | 설명
+--- | ---
+up | 컨테이너 생성 후 시작
+ps | 컨테이너 목록 표시
+logs | 컨테이너 로그 출력
+run | 컨테이너 시작
+stop | 컨테이너 정지
+restart | 컨테이너 재시작
+pause | 컨테이너 일시 정지
+unpuase | 컨테이너 일시 정지의 해제/재개
+port | 공개 포트 표시
+config | 설정 확인
+kill | 컨테이너에게 시그널을 보내 강제 종료
+rm | 컨테이너 삭제
+down | 컨테이너 리소스 일괄 삭제
