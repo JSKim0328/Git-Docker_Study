@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTML 연습2</title>
+
+  <style>
+    a:link {
+      color: teal;
+    }
+
+    a:visited {
+      color: maroon;
+      text-decoration: none
+    }
+
+    a:hover {
+      color: yellow;
+      text-decoration: none
+    }
+
+    a:active {
+      color: red;
+      text-decoration: none
+    }
+  </style>
+</head>
+
+<body background="background-2079406_960_720.jpg">
+  <!--링크들-->
+  <a href="#color">다양한 색 표현법</a> <br>
+  <a href="#background">배경 변경</a> <br>
+  <a href="#hyperlink">링크</a> <br>
+  <a href="#image">이미지</a> <br>
+  <a href="#list">리스트</a> <br>
+  <a href="#table">표</a> <br>
+
+  <hr>
+
+  <!--다양한 색 표현법-->
+  <a name="color"></a>
+  <p>
+    <h3 style="color:aqua">색상이름으로 표현된 아쿠아색</h3>
+    <h3 style="color:rgb(192,192,192)">rgb 값으로 표현된 은색</h3>
+    <h3 style="color:#008000">16진수 값으로 표현된 녹색</h3>
+  </p>
+
+  <hr>
+
+  <!--배경 변경-->
+  <a name="background"></a>
+  <p style="background: #008000">
+    배경색은 초록색
+  </p>
+
+  <p background="993F01505C822F1605.jpg">
+    이건 안되네
+  </p>
+
+  <iframe src="993F01505C822F1605.jpg" style="width:50%; height:300px" name="myframe"></iframe>
+
+  <hr>
+
+  <!--링크-->
+  <a name="hyperlink"></a>
+  <p>
+    <a href="https://google.com" target="_blank">구글신</a> <br>
+    <a href="http://soen.kr" target="myframe">공부하기 괜찮았던 사이트</a>
+  </p>
+
+  <hr>
+
+  <!--이미지-->
+  <a name="image"></a>
+  <img src="hey" alt="이미지가 없습니다.">
+
+  <a href="https://google.com" target="_blank">
+    <img src="ndFg-IDH.jpg" alt="없음." width="320" height="214">
+  </a>
+
+  <a href="https://naver.com" target="_blank">
+    <img src="unnamed.jpg" alt="없음." style="width:320px; height:214px">
+  </a>
+
+  <hr>
+
+  <!--리스트-->
+  <a name="list"></a>
+  <ul style="list-style-type: circle">
+    <li>사과</li>
+    <li>멜론</li>
+    <li>바나나</li>
+  </ul>
+
+  <ol style="list-style-type: decimal">
+    <li>one</li>
+    <li>two</li>
+    <li>three</li>
+  </ol>
+
+  <dl>
+    <dt><strong>집</strong></dt>
+    <dd>에서 나오기 싫다.</dd>
+  </dl>
+
+  <hr>
+
+  <!--표-->
+  <a name="table"></a>
+  <table style="border: 1px solid black; border-collapse: collapse; width:50%">
+    <caption>이것은 표입니다</caption>
+
+    <tr style="background-color: lightgrey">
+      <th colspan="2">표표</th>
+    </tr>
+
+    <tr>
+      <td>안</td>
+      <td>녕</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">하세요</td>
+    </tr>
+
+    <tr>
+      <td rowspan="2">자고 싶다</td>
+      <td>허허</td>
+    </tr>
+
+    <tr>
+      <td>헤헿</td>
+    </tr>
+
+  </table>
+
+</body>
+
+</html>
