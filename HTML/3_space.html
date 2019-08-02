@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>HTML 공간분할</title>
+  <meta charset="UTF-8">
+</head>
+
+
+<body>
+  <div style="border: 2px dashed orange">
+    <h3>링크</h3>
+    <a href="#block&inline">블록과 인라인</a> <br>
+    <a href="#iframe">iframe 요소</a> <br>
+    <a href="#layout">레이아웃</a>
+  </div>
+  <hr size="10px" style="background: darkorange">
+
+  <!--블록과 인라인-->
+  <a id="block&inline">
+    <h3>블록과 인라인</h3>
+  </a>
+
+  <dl>
+    &nbsp;&nbsp;<dt><strong>블록타입의 요소</strong></dt> <br>
+    <dd>새로운 줄에서 시작하고 한 줄을 통째로 차지하는 요소.</dd>
+  </dl>
+
+  <dl>
+    &nbsp;&nbsp;<dt><strong>인라인 타입의 요소</strong></dt> <br>
+    <dd>새로운 줄이 아닌 그 자리에서 그 요소 크기만큼의 자리만 차지하는 요소.</dd>
+  </dl>
+
+  <div style="border: 2px solid green; background: lightgrey">
+    div 태그는 <em>블록 타입의 요소</em>>로 여러 태그에 <mark>공통적인 스타일</mark>을 적용할 때 주로 쓰인다. <br>
+    반면 span 태그는 인라인 타입 요소로 <span style="color:blueviolet ">특정 부분</span>에 다른 스타일을 적용할 때 주로 쓰인다.
+  </div>
+
+  <hr size="5px">
+
+  <!--iframe 요소-->
+  <a id="iframe">
+    <h3>iframe 요소</h3>
+  </a>
+  
+  <dl>
+    <dt><strong>iframe 요소</strong></dt> <br>
+    <dd>inline frame의 약자로 웹페이지 안에 새로운 웹페이지를 삽입할 때 쓰는 요소.</dd>
+  </dl>
+
+  <iframe src="ref/unnamed.jpg" name="myframe" style="border: 2px dashed blue;width: 61% ; height: 700px;"></iframe> <br>
+  <a href="ref/993F01505C822F1605.jpg" target="myframe">이걸 누르면 위의 이미지가 바뀜</a> <br>
+  <a href="ref/unnamed.jpg" target="myframe">원래대로</a> <br>
+  <iframe src="http://soen.kr" style="width: 50%; height: 600px; border:none"></iframe> <br>
+
+  <hr size="5px">
+
+  <!--레이아웃-->
+  <a id="layout">
+    <h3>레이아웃</h3>
+  </a>
+
+  <dl>
+    <dt><strong>레이아웃</strong></dt> <br>
+    <dd>
+      여러 요소들을 보기 좋게 배치하는 작업. <br>
+      다음과 같은 방법들을 이용
+      <ul>
+        <li>div 요소를 이용해 css 스타일을 적용</li>
+        <li>
+          HTML5의 <strong>의미요소</strong>를 이용해 레이아웃을 구성.<br>
+          <img src="ref/img_html_html5_layout.png" alt="이미지가 없음">
+        </li>
+        <li><span style="color: darkgrey"><del>테이블을 이용한 방법</del></span></li>
+      </ul>
+    </dd>
+
+  </dl>
+
+
+</body>
+
+</html>
