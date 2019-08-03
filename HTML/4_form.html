@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>form과 input</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <div style="border: 2px dashed orange">
+    <h2>링크</h2>
+    <a href="#form">FORM</a> <br>
+    <a href="#input">input</a> <br>
+  </div>
+  <hr size="10px" style="background: darkorange">
+
+  <!--FORM-->
+  <a id="form">
+    <h2>FORM</h2>
+  </a>
+
+  <dl>
+    <dt><strong>FORM 이란?</strong></dt> <br>
+    <dd>
+      웹 페이지에서 사용자에게 입력을 받을 때 쓰는 제출 형식. 받은 입력을 <span style="color:blue">action</span> 속성
+      을 통해서 서버로 보낼 수 있다. <span style="color: blue">method</span> 속성은 데이터 전송방식을 결정하는데, 그
+      방식은 다음과 같다.
+      <ul>
+        <li>
+          GET <br>
+          주소에 데이터를 추가하여 전달하는 방식. 데이터가 주소창에 그대로 나타나기에 중요하지 않고 크기가 작은 데이터를 보낼 때
+          주로 사용된다.
+        </li>
+
+        <li>
+          POST <br>
+          데이터를 따로 첨부하여 전달하는 방식. 크기가 큰 데이터를 더욱 안전하게 보낼 수 있다.
+        </li>
+
+      </ul>
+    </dd>
+  </dl>
+
+  <p>GET 방식: &lt;form action="expample.org/ex.html" method="get"&gt;&lt;/form&gt;</p>
+  <p>POST 방식: &lt;form action="expample.org/ex.html" method="post"&gt;&lt;/form&gt;</p>
+
+
+  <hr size="5px">
+
+  <!--input-->
+  <a id="input">
+    <h2>input</h2>
+  </a>
+
+  <dl>
+    <dt><strong>input 이란?</strong></dt> <br>
+    <dd>
+      사용자에게 입력을 받을 수 있는 요소이다. <span style="color:blue">type</span> 속성을 통해 여러 형태로 입력을
+      받을 수 있다.
+      타입은 다음과 같은 것들이 같다.
+
+      <ul>
+        <li>
+          text
+          <p>텍스트를 입력받을 수 있는 칸이 생긴다.</p>
+          <input type="text" value="초기값">
+        </li><br>
+
+        <li>
+          password
+          <p>text 와 유사하나 그 내용이 감춰져서 보여진다.</p>
+          <input type="password">
+        </li><br>
+
+        <li>
+          hidden
+          <p>서버에 전송을 해야하지만 사용자에게 알려줄 필요도, 입력받을 필요도 없는 값을 전송할 때 쓰인다.</p>
+        </li><br>
+
+        <li>
+          radio
+          <p>
+            여러 개의 옵션 중 하나를 선택할 수 있게 하는 입력 형식이다. 이 때, 옵션들의 <span style="color:blue">name</span>
+            은 서로 같아야 한다. <span style="color:blue">checked</span> 속성을 통해 기본 선택값을 선택할 수 있다.
+          </p>
+          <input type="radio" name="hello" value="하나" checked> value는 <br>
+          <input type="radio" name="hello" value="둘"> 보여지지 <br>
+          <input type="radio" name="hello" value="셋"> 않는 <br>
+          <input type="radio" name="hello" value="넷"> 다.
+        </li><br>
+
+        <li>
+          checkbox
+          <p>
+            radio와 유사하나 다중 선택이 가능하다는 점만 다르다. <span style="color:blue">disabled</span> 속성을 통해
+            해당 옵션을 선택할 수 없게 할 수도 있다.
+          </p>
+          <input type="checkbox" name="hello"> 1<br>
+          <input type="checkbox" name="hello"> 2<br>
+          <input type="checkbox" name="hello" checked disabled> 3
+        </li><br>
+
+        <li>
+          select
+          <p>
+            드랍 다운 리스트의 형태로 여러 개의 옵션 중 하나를 선택할 수 있는 요소이다.
+            <span style="color: blue">select</span> 태그로 감싼 뒤에, <span style="color:blue">option</span> 태그로
+            옵션들을 나열한다. 이 때, <span style="color:blue">multiple</span> 속성을 사용하면 여러 옵션을 고를 수도 있다.
+            <span style="color:blue">selected</span> 속성으로 초기 선택값을 설정할 수 있다.
+          </p>
+          <select name="only">
+            <option value="one">하나</option>
+            <option value="two" selected>둘</option>
+            <option value="three">셋</option>
+          </select>
+
+          <select name="mutiple" multiple>
+            <option value="one">하나</option>
+            <option value="two" selected>둘</option>
+            <option value="three">셋</option>
+          </select>
+        </li> <br>
+
+        <li>
+          file
+          <p>
+            파일을 업로드할 수 있는 타입이다. 파일 타입의 인풋이 하나라도 있으면 form의 method는 무조건 
+            <span style="color: blue">post</span>가 되어야 한다.
+            <span style="color: blue">enctype</span> 이라는 속성은 인코딩 방식을 지정하는데, 파일이나 이미지를 전송하려면
+            'multipart/form-data'로 설정한다.
+          </p>
+
+          <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" name="upload">
+            <input type="submit" value="submit">
+          </form>
+        </li> <br>
+
+        <li>
+          button
+          <p>
+            버튼 요소는 사용자가 누를 수 있는 버튼을 나타낸다. <span style="color:blue">onclick</span> 속성 등을 통해 
+            버튼을 눌렀을 때의 동작을 정의할 수 있다.
+          </p>
+          <button type="button" onclick="alert('hello, world!')">버튼</button>
+        </li> <br>
+
+        <li>
+          submit
+          <p>
+            submit 타입은 form의 action에 명시된 서버에 입력값들을 제출하는 버튼이다.
+          </p>
+          <form action="" method="get" enctype="multipart/form-data">
+            <input type="password" name="passwd">
+            <input type="submit">
+          </form>
+        </li>
+        
+
+      </ul>
+    </dd>
+  </dl>
+
+  <hr size="5px">
+
+</body>
+
+</html>
