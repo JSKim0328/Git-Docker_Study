@@ -1,0 +1,21 @@
+#descendant_tag + article ul li {
+  color: red;
+}
+
+#child_tag + article ul > li {
+  color: red;
+}
+
+#general_sibling_tag ~ article {
+  color: red;
+}
+
+#adjacent_sibling_tag + article {
+  color: red;
+}
+
+#tag tr, #tag tr th, #tag tr td {
+  border: 2px solid black;
+}
+
+
