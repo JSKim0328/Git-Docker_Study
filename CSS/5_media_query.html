@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>선택자</title>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="1_style.css">
+
+  <style>
+    nav * {
+      color: white;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    div.head {
+      flex-grow: 0;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+
+    div.body {
+      display: flex;
+      flex-direction: row;
+    }
+
+    nav {
+      flex: 0 0 290px;
+      background-color: orange;
+    }
+
+    main.content {
+      margin-left: 50px;
+    }
+
+
+    @media(max-width:800px) {
+      div.body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      nav {
+        flex: 0 0 200px;
+        background-color: orange;
+      }
+
+      main.content {
+        margin-top: 20px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="head">
+    <h1>선택자</h1>
+  </div>
+  <div class="body">
+    <nav>
+      <header>
+        <h2>&nbsp;&nbsp;선택자</h2>
+      </header>
+      <ol>
+        <li><a href="#descendant">자손 선택자(descendant)</a></li>
+        <li><a href="#child">자식 선택자(child)</a></li>
+        <li><a href="#general_sibling">일반 동위 선택자(general sibling)</a></li>
+        <li><a href="#adjacent_sibling">인접 동위 선택자(adjacent sibling)</a></li>
+        <li><a href="#pseudo-class">의사 클래스(pseudo-class)</a></li>
+        <li><a href="#pseudo-element">의사 요소(pseudo-element)</a></li>
+        <li><a href="#attribute">속성 선택자(attribute selectors)</a></li>
+        <li><a href="#specificity">명시도(specificity)</a></li>
+      </ol>
+    </nav>
+
+    <main class="content">
+      <section>
+
+        <a id="descendant"></a>
+        <header>
+          <h2>자손 선택자(descendant)</h2>
+        </header>
+
+        <a id="descendant_tag"></a>
+        <article>
+          <p>
+            자손 선택자는 해당 요소의 하위 요소 중에서 특정 요소를 모두 선택한다.
+          </p>
+
+          <ul>
+            <li>사과</li>
+            <li>바나나</li>
+
+            <ul>
+              <li>빵</li>
+            </ul>
+
+            <ol>
+              <li>얘도 ul 자손이라 변함</li>
+            </ol>
+
+          </ul>
+          <li>얘는 ul이 조상에 없어서 안 변함</li>
+
+        </article>
+      </section>
+
+      <section>
+
+        <a id="child"></a>
+        <header>
+          <h2>자식 선택자(child)</h2>
+        </header>
+
+        <a id="child_tag"></a>
+
+        <article>
+          <p>
+            자식 선택자는 해당 요소의 자식 요소 중에서 특정 요소를 모두 선택한다.
+          </p>
+
+          <ul>
+            <li>사과</li>
+            <li>바나나</li>
+
+            <ul>
+              <li>빵</li>
+            </ul>
+
+            <ol>
+              <li>ul의 직계만 변하기 때문에 안 변함.</li>
+            </ol>
+
+          </ul>
+          <li>얘는 ul이 조상에 없어서 안 변함</li>
+
+        </article>
+      </section>
+
+      <section>
+
+        <a id="general_sibling"></a>
+        <header>
+          <h2>일반 동위 선택자(general sibling)</h2>
+        </header>
+
+        <article>
+          이 내용은 앞에 있어서 영향을 받지 않는다.
+        </article>
+
+        <a id="general_sibling_tag"></a>
+        <article>
+          <p>
+            일반 동위 선택자는 해당 요소와 동위 관계에 있고 뒤에 존재하는 특정 요소를 모두 선택한다.
+            이 때, 동위 관계란 부모 요소가 같음을 말한다.
+            <blockquote><em>만약 한 요소가 같은 요소를 자식으로 같는 경우 두 요소는 동위 관계로 취급된다.(크롬기준)</em></blockquote>
+          </p>
+          <article>
+            이 내용은 article 안에 있는 article 요소에 적혀있지만, 동위 관계로 취급된다.
+          </article>
+        </article>
+
+        <article>
+          이 내용은 뒤에 있어서 영향을 받는다.
+        </article>
+
+      </section>
+
+      <section>
+        <a id="adjacent_sibling"></a>
+        <header>
+          <h2>인접 동위 선택자(adjacent sibling)</h2>
+        </header>
+
+        <article>
+          이 내용은 앞에 있어서 영향을 받지 않는다.
+        </article>
+
+        <a id="adjacent_sibling_tag"></a>
+
+        <article>
+          <p>
+            인접 동위 선택자는 해당 요소와 동위 관계에 있고 바로 뒤에 존재하는 특정 요소를 모두 선택한다.
+          </p>
+        </article>
+
+        <article>
+          이 내용은 뒤에 있지만 바로 뒤에 있는게 아니라서 영향을 받지 않는다.
+        </article>
+
+      </section>
+
+      <section>
+        <a id="pseudo-class"></a>
+        <header>
+          <h2>의사 클래스(pseudo-class)</h2>
+        </header>
+
+        <article>
+          <p>
+            <q style="color: green">선택자:의사클래스</q> 꼴로 사용되며 HTML 요소의 상태를 명시할 때 사용된다.
+          </p>
+
+          <table id="tag" style="border-collapse: collapse">
+            <tr style="background-color: lightgrey">
+              <th>의사클래스</th>
+              <th>설명</th>
+            </tr>
+
+            <tr>
+              <td>:link</td>
+              <td>사용자가 아직 한 번도 해당 링크를 통해서&nbsp;연결된 페이지를 방문하지 않은 상태를 모두 선택함. (기본 상태)</td>
+            </tr>
+            <tr>
+              <td>:visited</td>
+              <td>사용자가 한 번이라도 해당 링크를 통해서 연결된 페이지를 방문한 상태를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:hover</td>
+              <td>사용자의 마우스 커서가 링크&nbsp;위에 올라가 있는 상태를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:active</td>
+              <td>사용자가 마우스로 링크를 클릭하고 있는 상태를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:focus</td>
+              <td>초점이 맞춰진 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:checked</td>
+              <td>체크된(checked) 상태의 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:enabled</td>
+              <td>사용할 수 있는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:disabled</td>
+              <td>사용할 수 없는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:target</td>
+              <td>현재 활성화된 target 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:in-range</td>
+              <td>특정 범위 내의 값을 가지는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:out-of-range</td>
+              <td>특정 범위를 벗어나는 값을 가지는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:read-only</td>
+              <td>readonly 속성을 가지는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:read-write</td>
+              <td>readonly 속성을 가지지 않는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:required</td>
+              <td>required 속성을 가지는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:optional</td>
+              <td>required 속성을 가지지 않는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:valid</td>
+              <td>유효한 값을 가지는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:invalid</td>
+              <td>유효하지 않은 값을 가지는 input 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:first-child</td>
+              <td>모든 자식(child) 요소 중에서 첫 번째에 위치하는 자식(child) 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:last-child</td>
+              <td>모든 자식(child) 요소 중에서 마지막에 위치하는 자식(child) 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:nth-child</td>
+              <td>모든 자식(child) 요소 중에서 앞에서부터 n번째에 위치하는 자식(child) 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:nth-last-child</td>
+              <td>모든 자식(child) 요소 중에서 뒤에서부터 n번째에 위치하는 자식(child) 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:first-of-type</td>
+              <td>모든 자식(child) 요소 중에서 첫 번째로 등장하는 특정 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:last-of-type</td>
+              <td>모든 자식(child)&nbsp;요소 중에서 마지막으로 등장하는 특정 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:nth-of-type</td>
+              <td>모든 자식(child)&nbsp;요소 중에서 n번째로 등장하는 특정 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:nth-last-of-type</td>
+              <td>모든 자식(child)&nbsp;요소 중에서 뒤에서부터 n번째로 등장하는 특정 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:only-child</td>
+              <td>자식(child)&nbsp;요소를 단 하나만 가지는 모든 요소의 자식(child) 요소를 선택함.</td>
+            </tr>
+            <tr>
+              <td>:only-of-type</td>
+              <td>자식(child)&nbsp; 요소를 특정 요소 단 하나만 가지는 모든 요소의 자식(child)&nbsp;요소를 선택함.</td>
+            </tr>
+            <tr>
+              <td>:empty</td>
+              <td>아무런 자식(child)&nbsp;요소도 가지지 않는 요소를 모두 선택함.</td>
+            </tr>
+            <tr>
+              <td>:root</td>
+              <td>문서의 root 요소를 선택함.</td>
+            </tr>
+            <tr>
+              <td>:not(선택자)</td>
+              <td>모든 선택자와 함께 사용할 수 있으며, 해당 선택자를 반대로 적용함.</td>
+            </tr>
+            <tr>
+              <td>:lang(언어)</td>
+              <td>특정 요소를 언어 설정에 따라 다르게 표현할 때에 사용함.</td>
+            </tr>
+          </table>
+
+        </article>
+
+      </section>
+
+      <section>
+        <a id="pseudo-element"></a>
+        <header>
+          <h2>의사 요소(pseudo-element)</h2>
+        </header>
+
+        <article>
+          <p>
+            <q style="color: green">선택자::의사요소이름</q>의 형태로 사용되고 해당 HTML 요소의 특정 부분만을 선택할 때 사용한다.
+          </p>
+          <p>::first-letter 과 ::first-line 은 블록 타입 요소에만 사용할 수 있다.</p>
+          <img src="ref/캡처.PNG">
+        </article>
+      </section>
+
+      <section>
+        <a id="attribute"></a>
+        <header>
+          <h2>속성 선택자(attribute selectors)</h2>
+        </header>
+
+        <article>
+          <p>
+            속성 선택자를 사용하면 특정 속성이나 특정 속성값을 가지고 있는 HTML 요소를 선택할 수 있다.
+          </p>
+
+        </article>
+      </section>
+
+      <section>
+        <a id="specificity"></a>
+        <header>
+          <h2>명시도(specificity)</h2>
+        </header>
+
+        <article>
+          <p>
+            어떤 요소가 여러 선택자의 대상일 때, 명시도에 따라 어느 선택자의 선언을 적용할지 결정된다.
+            물론 기본적으로 직접 적용은 항상 선언보다 우선시 된다.
+          </p>
+
+        </article>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>
