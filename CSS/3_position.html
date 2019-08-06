@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>포지션</title>
+  <meta charset="utf-8">
+
+  <style>
+    nav {
+      border: 2px dashed orange;
+    }
+
+    nav * {
+      color: orange;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  <nav>
+    <header><h2>링크</h2></header>
+    <ol>
+      <li><a href="#static">정적 위치(static) 방식</a></li>
+      <li><a href="#relative">상대 위치(relative) 방식</a></li>
+      <li><a href="#fixed">고정 위치(fixed) 방식</a></li>
+      <li><a href="#absolute">절대 위치(absolute) 방식</a></li>
+    </ol>
+  </nav>
+
+  <header><h1>포지션</h1></header>
+  <p>
+    포지션 속성은 요소의 위치를 어떻게 결정하지에 대한 속성이다. <br>
+    그 방식은 다음과 같이 4가지가 있다. <br> <br>
+    1. 정적 위치(static) 방식 <br>
+    2. 상대 위치(relative) 방식 <br>
+    3. 고정 위치(fixed) 방식 <br>
+    4. 절대 위치(absolute) 방식 <br>
+  </p>
+
+  <hr>
+
+  <section>
+    <a id="static"></a>
+    <header><h2>정적 위치(static) 방식</h2></header>
+    
+    <article>
+      <p>
+        정적 위치 방식은 모든 html 요소의 position 속성의 기본 값으로 top, left, bottom, right 등의 속성 값에 영향을
+        받지 않는다. 단순히 웹페이지의 흐름에 따라 위치가 결정된다.
+    </article>
+  </section>
+
+  <section>
+    <a id="relative"></a>
+    <header><h2>상대 위치(relative) 방식</h2></header>
+    
+    <article>
+      <p>
+        요소의 정적위치를 기준으로 상대적인 위치를 정하는 방식이다. top, left, bottom, right 등의 속성을 통해 위치를
+        결정한다. 앞서 언급한 속성을 offset이라고 하는데, 아무 설정도 안할 경우 정적 위치 방식과 동일한 위치에 존재한다.
+      </p>
+    </article>
+  </section>
+
+  <section>
+    <a id="fixed"></a>
+    <header><h2>고정 위치(fixed) 방식</h2></header>
+    
+    <article>
+      <p>
+        고정 위치 방식은 위치 결정 기준이 뷰포인트이다. 즉 스크롤을 내려도 요소의 위치는 변하지 않는다. <br>
+        offset을 설정하지 않았을 경우에는 정적 위치 방식과 동일한 위치에 존재한다. 다만 상대 위치와는 다르게 변하는 것이
+        있다. 우선, 해당 요소의 부모 요소가 자식 요소를 위해 공간을 할당하지 않게 된다. 또한, 해당 요소의 크기 역시
+        내용(content)에 맞게 조정된다(설령, block 타입이여도).
+      </p>
+
+      <div style="border: 2px solid green">
+        고정 위치 테스트의 부모 태그
+        <p style="position: fixed; top: 0; left: 0; background-color: orange;">고정 위치 테스트</p>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <a id="absolute"></a>
+    <header><h2>절대 위치(absolute) 방식</h2></header>
+
+    <article>
+      <p>
+        고정 위치 방식과 거의 동일한데 다른 점은 위치 결정 기준이 뷰포인트가 아니라는 것이다.
+        절대 위치 방식의 위치 결정 기준은 위치가 결정된 가장 가까운 조상 요소이다. 위치가 결정됐다는 것은 해당 요소의 position
+        속성 값이 static이 아니라는 것을 의미한다.
+      </p>
+      <div style="border: 2px solid green; position: relative;">
+        절대 위치 테스트의 부모 태그
+        <p style="position: absolute; background-color: antiquewhite; left: 10px; bottom: 0px;">절대 위치 테스트</p>
+      </div>
+      
+    </article>
+  </section>
+
+</body>
+
+</html>
