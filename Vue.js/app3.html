@@ -9,12 +9,17 @@
 
 <body>
 
-  <div id="app2">
-    <span v-bind:title="message">
-      새로고침을 하면 마우스를 올렸을 때 나타나는 시간도 바뀌어요!
-    </span>
+  <div id="app3">
+    <p v-if="seen">이 메세지가 보이나요</p>
   </div>
-  <script src="app2.js"></script>
+  <script>
+    var app3 = new Vue({
+      el: "#app3",
+      data: {
+        seen: true
+      }
+    })
+  </script>
 </body>
 
 </html>

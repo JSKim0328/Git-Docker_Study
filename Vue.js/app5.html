@@ -1,0 +1,31 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app5">
+    <p>{{ message }}</p>
+    <button v-on:click="rmsg">메세지 뒤집기</button>
+  </div>
+  <script>
+    var app5 = new Vue({
+      el: "#app5",
+      data: {
+        message: "Hello, Vue!"
+      },
+      methods: {
+        rmsg: function () {
+          this.message = this.message.split('').reverse().join('');
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

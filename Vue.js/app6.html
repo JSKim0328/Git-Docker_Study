@@ -1,0 +1,26 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app6">
+    <p>{{ message }}</p>
+    <input v-model="message" size="100">
+  </div>
+  <script>
+    var app6 = new Vue({
+      el: "#app6",
+      data: {
+        message: "app6.message를 바꾸거나 텍스트 입력란의 내용을 바꾸면 위의 내용도 바뀌어요!"
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app2">
+    <span v-bind:title="message">
+      새로고침을 하면 마우스를 올렸을 때 나타나는 시간도 바뀌어요!
+    </span>
+  </div>
+  <script>
+    var app2 = new Vue({
+      el: '#app2',
+      data: {
+        message: '이 페이지는 ' + new Date() + ' 에 로드 되었습니다'
+      }
+    })
+  </script>
+</body>
+
+</html>

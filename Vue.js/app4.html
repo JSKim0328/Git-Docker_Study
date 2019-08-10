@@ -1,0 +1,33 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app4">
+    <ol>
+      <li v-for="element of list">
+        {{ element.text }}
+      </li>
+    </ol>
+  </div>
+  <script>
+    var app4 = new Vue({
+      el: "#app4",
+      data: {
+        list: [
+          { text: "JavaScript 배우기" },
+          { text: "Vue 배우기" },
+          { text: "만들기" }
+        ]
+      }
+    })
+  </script>
+</body>
+
+</html>
