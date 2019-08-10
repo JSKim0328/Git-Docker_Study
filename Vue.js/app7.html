@@ -1,0 +1,40 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app7">
+    <ol>
+      <li-item
+        v-for="item of list"
+        v-bind:arb="item"
+        v-bind:key="item.id"
+      ></li-item>
+    </ol>
+  </div>
+  <script>
+    Vue.component('li-item', {
+      props: ['arb'],
+      template: '<li>{{arb.content}}</li>'
+    })
+
+    var app7 = new Vue({
+      el: "#app7",
+      data: {
+        list: [
+          {id: 0, content: "first"},
+          {id: 1, content: "second"},
+          {id: 2, content: "third"}
+        ]
+      }
+    })
+  </script>
+</body>
+
+</html>
