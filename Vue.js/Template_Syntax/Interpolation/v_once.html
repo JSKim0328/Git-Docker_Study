@@ -1,0 +1,29 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+    <p>{{msg}}</p>
+    <p v-once>{{cmsg}}</p>
+  </div>
+  
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        msg: "이 메세지는 변경할 수 있습니다.",
+        cmsg: "이 메세지는 v-once 속성이 적용되어 변경할 수 없습니다."
+      }
+    })
+    
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <p>Using mustaches: {{ msg }}</p>
+    <p>Using v-html directive: <span v-html="msg">sadfadf</span></p>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        msg: "<span style=\"color:red\">This should be red</span>"
+      }
+    })
+  </script>
+</body>
+
+</html>

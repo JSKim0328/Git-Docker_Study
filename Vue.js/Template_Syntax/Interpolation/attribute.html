@@ -1,0 +1,28 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <img v-bind:src="imgSrc" alt="이미지가 없어요" style="width: 30%">
+    <p>vm.imgSrc의 값을 변경하면 이미지를 변경할 수 있음!</p>
+    <button v-bind:disabled="isButtonDisabled">vm.isButtonDisabled 값을 변경해보세요!</button>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        imgSrc: "http://file.mk.co.kr/meet/neds/2019/03/image_readtop_2019_183477_15536268633684425.jpg",
+        isButtonDisabled: true
+      }
+    })
+  </script>
+</body>
+
+</html>
