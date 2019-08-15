@@ -1,0 +1,36 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+    <div v-bind:style="styleObj">
+      스타일을 적용해 보아요.
+    </div>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        color: "red",
+        fontSize: "5em"
+      },
+      computed: {
+        styleObj: function () {
+          return {
+            color: this.color,
+            'font-size': this.fontSize
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

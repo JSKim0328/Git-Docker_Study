@@ -1,0 +1,72 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <style>
+    .base {
+      border: 2px dashed orange;
+    }
+
+    .first {
+      font-size: 5em;
+    }
+
+    .second {
+      color: red;
+    }
+
+    .third {
+      font: 2em bold;
+    }
+
+    .forth {
+      color: blue;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="base" v-bind:class="classObj">
+      first: 5em, second: red
+    </div>
+
+    <div v-bind:class="[third, forth]">
+      third: 2em bold, forth: blue
+    </div>
+
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+
+      data: {
+        isFirst: true,
+        isSecond: false,
+        third: "third",
+        isForth: false
+      },
+      
+      computed: {
+        classObj: function () {
+          return {
+            first: this.isFirst,
+            second: this.isSecond
+          }
+        },
+        forth: function () {
+          return {
+            forth: this.isForth
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
