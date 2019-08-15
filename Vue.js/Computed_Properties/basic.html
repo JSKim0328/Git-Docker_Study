@@ -1,0 +1,57 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+    <p>
+      <h3>메소드를 이용한 msg 뒤집기</h3>
+      {{ reverseMsg() }} <br>
+      호출횟수: {{ num1 }}
+    </p>
+    <p>
+      <h3>computed 프로퍼티를 이용해 msg 뒤집기</h3>
+      {{ reversedMsg }} <br>
+      호출횟수: {{ num2 }}
+    </p>
+    <p>
+      <h4>msg 내용 변경하기</h4>
+      <input v-model="msg">
+    </p>
+  </div>
+  <script>
+    var vm = new Vue({
+      el : "#app",
+
+      data : {
+        msg : "Hello, world!",
+        num1 : 0,
+        num2 : 0
+      },
+
+      // reverseMsg는 실행할 때마다 함수 내부의 코드를 실행하여 값을 반환한다.
+      methods : {
+        reverseMsg : function() {
+          this.num1++;
+          return this.msg.split('').reverse().join('');
+        }
+      },
+
+      // reversedMsg는 관련된 데이터가 변경되었을 경우에만 코드를 실행하고, 그 외에는 이전 결과값을 반환한다.
+      computed: {
+        reversedMsg : function () {
+          this.num2++;
+          return this.msg.split('').reverse().join('');
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+    <p>message: {{ message }}</p>
+    <p>msg: {{ msg }}</p>
+    <p>al: {{ al }}</p> <!--이 줄을 지우면 al 함수는 절대 호출되지 않아요-->
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        message: "Hello, world",
+        msg: "hu",
+      },
+
+      watch: {
+        msg: function () {
+          alert("watcher: " + this.message)
+        }
+      },
+
+      computed: {
+        al: function () {
+          alert("computed: " + this.message)
+          return "null"
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

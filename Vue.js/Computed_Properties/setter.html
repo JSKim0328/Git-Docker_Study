@@ -1,0 +1,42 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app" style="font-size: 2em">
+    <p>first: {{ first }}</p>
+    <p>last: {{ last }}</p>
+    <p>full: {{ full }}</p>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        first: "Foo",
+        last: "Bar"
+      },
+
+      computed: {
+        full: {
+          get: function () {
+            return this.first + ' ' + this.last
+          },
+
+          set: function (arb) {
+            var name = arb.split(' ')
+            this.first = name[0]
+            this.last = name[name.length - 1]
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
