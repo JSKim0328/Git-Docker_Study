@@ -1,0 +1,46 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <style>
+    #container {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+
+</head>
+
+<body>
+  
+  <div id="app">
+    <ul>
+      <li v-for="(item, name) of obj" :key="name">
+        {{ name }}: {{ item }}
+      </li>
+    </ul>
+    <button @click="__push">두개 추가</button>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        obj: {p1: "banana", p2: "apple", p3: "orange"}
+      },
+      methods: {
+        __push: function () {
+          this.obj = Object.assign({}, this.obj, {
+            p4: "pineapple",
+            p5: "grapes"
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

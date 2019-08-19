@@ -1,0 +1,43 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <style>
+    #container {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+
+</head>
+
+<body>
+  
+  <div id="app">
+    <ul>
+      <li v-for="(item, idx) of arr" :key="idx">
+        {{ idx }}: {{ item }}
+      </li>
+    </ul>
+    <button @click="__push">두개 추가</button>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        arr: ["banana", "apple", "orange"]
+      },
+      methods: {
+        __push: function () {
+          this.arr.splice(this.arr.length, 0, "pineapple", "grapes")
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

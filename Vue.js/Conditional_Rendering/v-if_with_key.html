@@ -1,0 +1,44 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+    <template v-if="logintype === 'username'">
+      <label for="username">Username</label>: <br>
+      <input type="text" placeholder="Enter your username" id="username" key="id">
+    </template>
+    <template v-else-if="logintype === 'email'">
+      <label for="email">Email</label>
+      <input type="text" placeholder="Enter your email" id="email" key="id"> <br>
+      <input type="password" key="passwd">
+    </template>
+    <br>
+    <button v-on:click="switchlogintype">Toggle login type</button>
+    <br> 키를 같게 하면 재사용되는 input 요소의 짝을 지어줄 수 있다. 키가 같은 요소가 한 템플릿 안에 여러개 있으면
+    혹은 키를 아얘 사용안하면 cascading 법칙을 따르는 듯 하다.
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        logintype: "username"
+      },
+      
+      methods: {
+        switchlogintype: function () {
+          if (this.logintype === "username") this.logintype="email";
+          else this.logintype="username";
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
