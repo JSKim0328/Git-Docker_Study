@@ -1,0 +1,51 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <a href="https://google.com" @click.prevent="alternative">https://google.com</a>
+    <div style="border: 2px solid red; margin-bottom: 10px;" @click.capture="divL">
+      <p style="border: 2px solid green" @click.capture.self.stop="pL"> <!--self를 만족하면 stop이 실행-->
+        <span style="border: 2px solid orange" @click.capture="spanL">클릭</span>
+      </p>
+    </div>
+
+    <div style="border: 2px solid red" @click="divL">
+      <p style="border: 2px solid green" @click.stop.self="pL"> <!--stop이 무조건 실행-->
+        <span style="border: 2px solid orange" @click="spanL">클릭2</span>
+      </p>
+    </div>
+    <p id="board"></p>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+
+      },
+      methods: {
+        alternative: function () {
+          alert("속았지");
+        },
+        divL: function () {
+          document.getElementById("board").innerHTML += "div <br/>";
+        },
+        pL: function () {
+          document.getElementById("board").innerHTML += "p<br/>";
+        },
+        spanL: function () {
+          document.getElementById("board").innerHTML += "span<br/>";
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

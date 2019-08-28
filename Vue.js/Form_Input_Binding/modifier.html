@@ -1,0 +1,41 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <div style="border: 2px solid orange; margin-bottom: 10px">
+      <h2>with NO .lazy (sync after input event)</h2>
+      <input type="text" v-model="msg1">
+      <p>Message: {{ msg1 }}</p>
+    </div>
+    <div style="border: 2px solid orange; margin-bottom: 10px">
+      <h2>with .lazy (sync after change event)</h2>
+      <input type="text" v-model.lazy="msg2">
+      <p>Message: {{ msg2 }}</p>
+    </div>
+    <div style="border: 2px solid orange; margin-bottom: 10px">
+      <h2>with .trim</h2>
+      <input v-model.trim="msg3">
+      <p>Message: {{ msg3 }}</p>
+    </div>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        msg1: "",
+        msg2: "",
+        msg3: ""
+      }
+    })
+  </script>
+</body>
+
+</html>
