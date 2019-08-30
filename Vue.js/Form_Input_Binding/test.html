@@ -1,0 +1,31 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+    <input type="text" @input='msg=$event.target.value'>
+    <button @click='func'>버튼</button>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        msg: ''
+      },
+      methods: {
+        func: function() {
+          alert(this.msg);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

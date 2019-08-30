@@ -1,0 +1,51 @@
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  
+  <div id="app">
+
+    <div style="border: 2px solid red">
+      헬로
+      <blog-post v-for='(post, idx) of posts' :key='idx*10' :post='post' @enlarge='fontSize += 0.1'
+      :style="{'font-size': fontSize + 'em'}"
+      style="font-style: italic; border: 2px solid orange; margin: 2px">
+      </blog-post>
+    </div>
+  </div>
+
+  <script type='text/x-template' id='tem'>
+    <div>
+      <h3>{{ post.title }}</h3>
+      <p v-html="post.content"></p>
+      <button @click="$emit('enlarge')">enlarge</button>
+    </div>
+  </script>
+
+  <script type="text/javascript">
+    Vue.component('blog-post', {
+      props: ['post'],
+      template: '#tem'
+    })
+
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        fontSize: 1,
+        posts: [
+          { title: 'One', content: '<em>hello</em>' },
+          { title: 'Two', content: 'hi' },
+          { title: 'Three', content: 'nice to meet you' }
+        ]
+      }
+    })
+  </script>
+</body>
+
+</html>
