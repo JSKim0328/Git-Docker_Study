@@ -22,7 +22,7 @@ var app = http.createServer(function (request, response) {
       title = queryData.id;
     }
 
-    fs.readFile(`data/${title}.txt`, 'utf-8', function (err, description) {
+    fs.readFile(`data/${title}`, 'utf-8', function (err, description) {
       var template = `
       <!doctype html>
       <html>
