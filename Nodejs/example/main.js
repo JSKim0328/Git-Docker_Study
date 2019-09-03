@@ -21,6 +21,23 @@ var app = http.createServer(function (request, response) {
   }
   
   fs.readFile(`data/${title}`, 'utf-8', function (err, description) {
+
+    var list = '';
+    var path = './data/';
+
+    fs.readdir(path, function (err, flist) {
+      list += '<ol>';
+
+      for (var i = 0; i < flist.length; ++i) {
+        list += `<li><a href="/?id=${flist[i]}">${flist[i]}</a></li>`;
+      }
+
+      list += '</ol>';
+      console.log(list);
+    });
+
+    // 이렇게 하면 자바스크립트의 특징인 비동기 처리 때문에 list가 undefined라고 뜸.
+
     var template = `
       <!doctype html>
       <html>
@@ -30,11 +47,7 @@ var app = http.createServer(function (request, response) {
       </head>
       <body>
         <h1><a href="/">WEB</a></h1>
-        <ol>
-          <li><a href="/?id=HTML">HTML</a></li>
-          <li><a href="/?id=CSS">CSS</a></li>
-          <li><a href="/?id=JavaScript">JavaScript</a></li>
-        </ol>
+        ${list}
         <h2>${title}</h2>
         <p>
         ${description}
