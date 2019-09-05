@@ -3,7 +3,7 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
 
-function templateHtml(title, list, control, description, ) {
+function templateHtml(title, list, control, description) {
   return `
     <!doctype html>
     <html>
