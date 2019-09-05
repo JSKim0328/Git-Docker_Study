@@ -3,7 +3,7 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
 
-function templateHtml(title, list, list_button, description, ) {
+function templateHtml(title, list, control, description, ) {
   return `
     <!doctype html>
     <html>
@@ -14,7 +14,7 @@ function templateHtml(title, list, list_button, description, ) {
     <body>
       <h1><a href="/">WEB</a></h1>
       ${list}
-      ${list_button}
+      ${control}
       <h2>${title}</h2>
       <p>
       ${description}
@@ -39,10 +39,10 @@ function makeList(flist) {
 var app = http.createServer(function (request, response) {
   var _url = request.url;
   var pathname = url.parse(_url, true).pathname;
+  var queryData, title;
 
   if (pathname === '/') {
-    var queryData = url.parse(_url, true).query;
-    var title;
+    queryData = url.parse(_url, true).query;
 
     if (_url == '/') {
       title = "Welcome";
@@ -51,14 +51,30 @@ var app = http.createServer(function (request, response) {
     }
 
     fs.readFile(`data/${title}`, 'utf8', function (err, description) {
+      if (err) {
+        response.writeHead(404);
+        response.end('Not Found');
+        return;
+      }
 
       fs.readdir('./data/', function (err, flist) {
         var list = makeList(flist);
 
         response.writeHead(200);
-        response.end(templateHtml(title, list,
-          `<input type="button" onclick="location.href='http://localhost:3000/create_page'" value="new page">`,
-          description));
+        if (title === 'Welcome') {
+          response.end(templateHtml(title, list,
+            `<button onclick="location.href='/create_page'">new page</button>`,
+            description));
+        } else {
+          response.end(templateHtml(title, list,
+            `<button onclick="location.href='/create_page'">new page</button>
+            <button onclick="location.href='/update_page?id=${title}'">update</button>
+            <form action="/delete_process" method="post" style="display: inline">
+              <input type="hidden" name='title' value='${title}'>
+              <button type="submit">delete</button>
+            <form>`,
+            description));
+        }
       });
 
     });
@@ -67,14 +83,14 @@ var app = http.createServer(function (request, response) {
   } else if (pathname === '/create_page') {
     response.writeHead(200);
     response.end(templateHtml('Create Page', '', '',
-    `<form action="http://localhost:3000/create_process" method="post">
-      <label for="title"></label> <br>
-      <input type="text" name="title" placeholder="title"> <br><br>
-      <label for="description"></label>
-      <textarea name="description" cols="30" rows="10" placeholder="description"></textarea> <br><br>
-      <button type="submit">생성</button>
-    </form>
-    `));
+      `
+      <form action="/create_process" method="post">
+        <input type="text" name="title" placeholder="title"> <br><br>
+        <textarea name="description" cols="30" rows="10" placeholder="description"></textarea> <br><br>
+        <button type="submit">생성</button>
+      </form>
+      `
+    ));
 
   } else if (pathname === '/create_process') {
 
@@ -87,11 +103,82 @@ var app = http.createServer(function (request, response) {
 
       request.on('end', function () {
         var post = qs.parse(body);
+
         fs.writeFile(`data/${post.title}`, post.description, 'utf8', function (err) {
           response.writeHead(302, { Location: `/?id=${post.title}` });
           response.end();
         });
         
+      });
+    } else {
+      response.writeHead(200);
+      response.end('data is not posted');
+    }
+
+  } else if (pathname === '/update_page') {
+    queryData = url.parse(_url, true).query;
+    title = queryData.id;
+
+    fs.readFile(`data/${title}`, 'utf8', function (err, description) {
+      if (err) {
+        response.writeHead(404);
+        response.end('Not Found');
+        return;
+      }
+
+      response.writeHead(200);
+      response.end(templateHtml(title, '', '',
+        `
+        <form action="/update_process" method="post">
+          <input type='hidden' name='pre_title' value='${title}'>
+          <input type="text" name="title" value="${title}"> <br><br>
+          <textarea name="description" cols="30" rows="10">${description}</textarea> <br><br>
+          <button type="submit">수정</button>
+        </form>
+        `
+      ));
+
+    });
+
+  } else if (pathname === '/update_process') {
+    if (request.method === 'POST') {
+      var body = '';
+
+      request.on('data', function (data) {
+        body += data;
+      });
+
+      request.on('end', function () {
+        var post = qs.parse(body);
+        
+        fs.rename(`data/${post.pre_title}`, `data/${post.title}`, function (err) {
+          fs.writeFile(`data/${post.title}`, post.description, 'utf8', function (err) {
+            response.writeHead(302, { Location: `/?id=${post.title}` });
+            response.end();
+          });
+        });
+        
+      });
+    } else {
+      response.writeHead(200);
+      response.end('data is not posted');
+    }
+
+  } else if (pathname === '/delete_process') {
+    if (request.method === 'POST') {
+      var body = '';
+
+      request.on('data', function (data) {
+        body += data;
+      });
+
+      request.on('end', function () {
+        var post = qs.parse(body);
+        
+        fs.unlink(`data/${post.title}`, function (err) {
+          response.writeHead(302, { Location: `/` });
+          response.end();
+        })
       });
     } else {
       response.writeHead(200);
