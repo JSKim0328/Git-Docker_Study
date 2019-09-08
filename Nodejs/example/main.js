@@ -2,39 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
-
-function templateHtml(title, list, control, description) {
-  return `
-    <!doctype html>
-    <html>
-    <head>
-      <title>WEB1 - ${title}</title>
-      <meta charset="utf-8">
-    </head>
-    <body>
-      <h1><a href="/">WEB</a></h1>
-      ${list}
-      ${control}
-      <h2>${title}</h2>
-      <p>
-      ${description}
-      </p>
-    </body>
-    </html>
-    `;
-}
-
-function makeList(flist) {
-  var list = '<ol>';
-
-  for (var i = 0; i < flist.length; ++i) {
-    if (flist[i] === 'Welcome') continue;
-    list += `<li><a href="/?id=${flist[i]}">${flist[i]}</a></li>`;
-  }
-
-  list += '</ol>';
-  return list;
-}
+var template = require('./HTML_Template.js');
 
 var app = http.createServer(function (request, response) {
   var _url = request.url;
@@ -58,15 +26,15 @@ var app = http.createServer(function (request, response) {
       }
 
       fs.readdir('./data/', function (err, flist) {
-        var list = makeList(flist);
+        var list = template.list(flist);
 
         response.writeHead(200);
         if (title === 'Welcome') {
-          response.end(templateHtml(title, list,
+          response.end(template.html(title, list,
             `<button onclick="location.href='/create_page'">new page</button>`,
             description));
         } else {
-          response.end(templateHtml(title, list,
+          response.end(template.html(title, list,
             `<button onclick="location.href='/create_page'">new page</button>
             <button onclick="location.href='/update_page?id=${title}'">update</button>
             <form action="/delete_process" method="post" style="display: inline">
@@ -82,7 +50,7 @@ var app = http.createServer(function (request, response) {
 
   } else if (pathname === '/create_page') {
     response.writeHead(200);
-    response.end(templateHtml('Create Page', '', '',
+    response.end(template.html('Create Page', '', '',
       `
       <form action="/create_process" method="post">
         <input type="text" name="title" placeholder="title"> <br><br>
@@ -127,7 +95,7 @@ var app = http.createServer(function (request, response) {
       }
 
       response.writeHead(200);
-      response.end(templateHtml(title, '', '',
+      response.end(template.html(title, '', '',
         `
         <form action="/update_process" method="post">
           <input type='hidden' name='pre_title' value='${title}'>
