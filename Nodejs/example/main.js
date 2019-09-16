@@ -3,6 +3,8 @@ var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
 var template = require('./HTML_Template.js');
+var path = require('path');
+var sanitizeHtml = require('sanitize-html');
 
 var app = http.createServer(function (request, response) {
   var _url = request.url;
@@ -15,7 +17,7 @@ var app = http.createServer(function (request, response) {
     if (_url == '/') {
       title = "Welcome";
     } else {
-      title = queryData.id;
+      title = path.parse(queryData.id).base;
     }
 
     fs.readFile(`data/${title}`, 'utf8', function (err, description) {
@@ -72,8 +74,11 @@ var app = http.createServer(function (request, response) {
       request.on('end', function () {
         var post = qs.parse(body);
 
-        fs.writeFile(`data/${post.title}`, post.description, 'utf8', function (err) {
-          response.writeHead(302, { Location: `/?id=${post.title}` });
+        var sanitizedTitle = sanitizeHtml(path.parse(post.title).base);
+        var sanitizedDescription = sanitizeHtml(post.description);
+
+        fs.writeFile(`data/${sanitizedTitle}`, sanitizedDescription, 'utf8', function (err) {
+          response.writeHead(302, { Location: `/?id=${sanitizedTitle}` });
           response.end();
         });
         
@@ -85,22 +90,24 @@ var app = http.createServer(function (request, response) {
 
   } else if (pathname === '/update_page') {
     queryData = url.parse(_url, true).query;
-    title = queryData.id;
+    sanitizedtitle = sanitizeHtml(path.parse(queryData.id).base);
 
-    fs.readFile(`data/${title}`, 'utf8', function (err, description) {
+    fs.readFile(`data/${sanitizedtitle}`, 'utf8', function (err, description) {
       if (err) {
         response.writeHead(404);
         response.end('Not Found');
         return;
       }
 
+      var sanitizedDescription = sanitizeHtml(description);
+
       response.writeHead(200);
-      response.end(template.html(title, '', '',
+      response.end(template.html(sanitizedtitle, '', '',
         `
         <form action="/update_process" method="post">
-          <input type='hidden' name='pre_title' value='${title}'>
-          <input type="text" name="title" value="${title}"> <br><br>
-          <textarea name="description" cols="30" rows="10">${description}</textarea> <br><br>
+          <input type='hidden' name='pre_title' value='${sanitizedtitle}'>
+          <input type="text" name="title" value="${sanitizedtitle}"> <br><br>
+          <textarea name="description" cols="30" rows="10">${sanitizedDescription}</textarea> <br><br>
           <button type="submit">수정</button>
         </form>
         `
@@ -118,10 +125,10 @@ var app = http.createServer(function (request, response) {
 
       request.on('end', function () {
         var post = qs.parse(body);
-        
-        fs.rename(`data/${post.pre_title}`, `data/${post.title}`, function (err) {
-          fs.writeFile(`data/${post.title}`, post.description, 'utf8', function (err) {
-            response.writeHead(302, { Location: `/?id=${post.title}` });
+
+        fs.rename(`data/${post.pre_title}`, `data/${path.parse(post.title).base}`, function (err) {
+          fs.writeFile(`data/${path.parse(post.title).base}`, post.description, 'utf8', function (err) {
+            response.writeHead(302, { Location: `/?id=${path.parse(post.title).base}` });
             response.end();
           });
         });
@@ -129,7 +136,7 @@ var app = http.createServer(function (request, response) {
       });
     } else {
       response.writeHead(200);
-      response.end('data is not posted');
+      response.end('Invalid Access');
     }
 
   } else if (pathname === '/delete_process') {
@@ -150,7 +157,7 @@ var app = http.createServer(function (request, response) {
       });
     } else {
       response.writeHead(200);
-      response.end('data is not posted');
+      response.end('Invalid Access');
     }
 
   } else {
