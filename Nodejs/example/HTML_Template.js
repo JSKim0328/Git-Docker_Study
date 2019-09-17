@@ -25,7 +25,7 @@ var template = {
   
     for (var i = 0; i < flist.length; ++i) {
       if (flist[i] === 'Welcome') continue;
-      list += `<li><a href="/?id=${flist[i]}">${flist[i]}</a></li>`;
+      list += `<li><a href="/page/${flist[i]}">${flist[i]}</a></li>`;
     }
   
     list += '</ol>';
